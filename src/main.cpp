@@ -155,8 +155,8 @@ void setup()
     // Read data from unconnected pin to get random value for seed
     const int seed = analogRead( A4 );
 
-    constexpr int sramBegin = 0x1800;
-    constexpr int sramEnd = 0x1FFF;
+    constexpr int sramBegin = 0x00;
+    constexpr int sramEnd = 0x07FF;
     fillSRAM( sramBegin, sramEnd, seed );
 
     const bool success = checkSRAM( sramBegin, sramEnd, seed );
