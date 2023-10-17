@@ -154,6 +154,7 @@ void initialize()
 
     digitalWrite( sramReadEnable, HIGH );
     digitalWrite( shiftLatch, LOW );
+    digitalWrite( LED_BUILTIN, LOW );
 }
 
 void setup()
