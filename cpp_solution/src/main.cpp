@@ -162,7 +162,7 @@ void setup()
     initialize();
 
     // Read data from unconnected pin to get random value for seed
-    const int seed = analogRead( A4 );
+    const int seed = analogRead( Pin::seed );
 
     constexpr int sramBegin = 0x00;
     constexpr int sramEnd = 0x07FF;

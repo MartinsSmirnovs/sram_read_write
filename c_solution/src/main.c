@@ -2,7 +2,7 @@
 
 enum Pin
 {
-    seed = 18,
+    seedIn = 18,
     sramReadEnable = 17,
     shiftSerial = 16,
     shiftLatch = 15,
@@ -133,7 +133,7 @@ void fillSRAM( int begin, int end, int seed )
 
 void initialize()
 {
-    pinMode( seed, INPUT );
+    pinMode( seedIn, INPUT );
     pinMode( sramReadEnable, OUTPUT );
     pinMode( shiftSerial, OUTPUT );
     pinMode( shiftLatch, OUTPUT );
@@ -150,7 +150,7 @@ void setup()
     initialize();
 
     // Read data from unconnected pin to get random value for seed
-    const int seed = analogRead( A4 );
+    const int seed = analogRead( seedIn );
 
     const int sramBegin = 0x00;
     const int sramEnd = 0x07FF;
