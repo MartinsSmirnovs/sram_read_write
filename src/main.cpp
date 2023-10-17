@@ -152,6 +152,7 @@ void initialize()
     pinMode( shiftSerial, OUTPUT );
     pinMode( shiftLatch, OUTPUT );
     pinMode( shiftClock, OUTPUT );
+    pinMode( LED_BUILTIN, OUTPUT );
 
     digitalWrite( sramReadEnable, HIGH );
     digitalWrite( shiftLatch, LOW );
@@ -168,16 +169,12 @@ void setup()
     constexpr int sramEnd = 0x07FF;
     fillSRAM( sramBegin, sramEnd, seed );
 
-    const bool success = checkSRAM( sramBegin, sramEnd, seed );
+    const bool result = checkSRAM( sramBegin, sramEnd, seed );
 
-    if( success )
-    {
-        Serial.println( "Successful!" );
-    }
-    else
-    {
-        Serial.println( "Error! SRAM does not work properly!" );
-    }
+    // Output the result using built-in LED
+    // Success - the LED is turned on
+    // Failure - the LED is turned off
+    digitalWrite( LED_BUILTIN, result );
 }
 
 void loop()
