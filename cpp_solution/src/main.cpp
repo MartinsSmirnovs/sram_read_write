@@ -145,8 +145,6 @@ void fillSRAM( int begin, int end, int seed )
 
 void initialize()
 {
-    Serial.begin( 115200 );
-
     pinMode( seed, INPUT );
     pinMode( sramReadEnable, OUTPUT );
     pinMode( shiftSerial, OUTPUT );
