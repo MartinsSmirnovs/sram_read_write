@@ -59,7 +59,7 @@ namespace SRAM
             pinMode( sramIO7, OUTPUT );
         }
 
-        void execute( uint8_t value, int address )
+        void operator()( uint8_t value, int address )
         {
             // Set value to store
             tools::setValue( value );
@@ -87,7 +87,7 @@ namespace SRAM
             pinMode( sramIO7, INPUT );
         }
 
-        uint8_t execute( int address )
+        uint8_t operator()( int address )
         {
             // Set address from which to read
             tools::setAddress( address );
@@ -104,9 +104,9 @@ bool checkSRAM( int begin, int end, int seed )
 
     SRAM::ScopedRead read;
 
-    for( int i = begin; i <= end; i++ )
+    for( int address = begin; address <= end; address++ )
     {
-        const uint8_t value = read.execute( i );
+        const uint8_t value = read( address );
 
         const uint8_t randomValue = random();
 
@@ -114,13 +114,13 @@ bool checkSRAM( int begin, int end, int seed )
         if( value != randomValue )
         {
             Serial.print( "Address: " );
-            Serial.println( i );
+            Serial.println( address );
             Serial.print( "Value: " );
             Serial.println( value );
             Serial.print( "Random: " );
             Serial.println( randomValue );
             Serial.println();
-            // return false;
+            return false;
         }
     }
 
@@ -133,13 +133,13 @@ void fillSRAM( int begin, int end, int seed )
 
     SRAM::ScopedWrite write;
 
-    for( int i = begin; i <= end; i++ )
+    for( int address = begin; address <= end; address++ )
     {
-        write.execute( static_cast< uint8_t >( random() ), i );
+        write( static_cast< uint8_t >( random() ), address );
     }
 }
 
-void setup()
+void initialize()
 {
     Serial.begin( 115200 );
 
@@ -151,6 +151,11 @@ void setup()
 
     digitalWrite( sramReadEnable, HIGH );
     digitalWrite( shiftLatch, LOW );
+}
+
+void setup()
+{
+    initialize();
 
     // Read data from unconnected pin to get random value for seed
     const int seed = analogRead( A4 );
